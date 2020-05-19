@@ -77,22 +77,50 @@ for c in cities:
     # Tucson: (32.1558,-110.8777)
     # Salt Lake City: (40.7774,-111.9301)
 
-    # TODO Get latitude and longitude values from the user
-    def get_coords():
-        first = input("enter 1st lat, lon seperated by commas:\n").split(',')
-        second = input("enter 2nd lat, lon seperated by commas:\n").split(',')
+'''
+# shorter stretch solution
+try:
+    lat1, lon1 = input("Enter lat1,lon1: ").split(',')
+    lat2, lon2 = input("Enter lat2,lon2: ").split(',')
+except ValueError:
+    print("Please enter two integer values, one for the lat and one for the lon.")
 
-        global lat1
-        global lon1
-        global lat2
-        global lon2
 
-        lat1 = float(first[0])
-        lon1 = float(first[1])
-        lat2 = float(second[0])
-        lon2 = float(second[1])
+def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
+    within = []
+    lat1, lon1 = float(lat1), float(lon1)
+    lat2, lon2 = float(lat2), float(lon2)
+    # Normalize
+    if lat2 < lat1:
+        lat1, lat2 = lat2, lat1  # Swap
+    if lon2 < lon1:
+        lon1, lon2 = lon2, lon1  # Swap
+    # Filter
+    for c in cities:
+        if c.lat >= lat1 and c.lat <= lat2 and c.lon >= lon1 and c.lon <= lon2:
+            within.append(c)
+    return within
+'''
 
-        return lat1, lon1, lat2, lon2
+# TODO Get latitude and longitude values from the user
+
+
+def get_coords():
+    first = input("enter 1st lat, lon seperated by commas:\n").split(',')
+    second = input("enter 2nd lat, lon seperated by commas:\n").split(',')
+
+    global lat1
+    global lon1
+    global lat2
+    global lon2
+
+    lat1 = float(first[0])
+    lon1 = float(first[1])
+    lat2 = float(second[0])
+    lon2 = float(second[1])
+
+    return lat1, lon1, lat2, lon2
+
 
 lat1 = 0
 lon1 = 0
@@ -118,9 +146,8 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     lon_max = lons_sorted[1]
 
     for city in cities:
-        print(city)
         if city.lat > lat_min and city.lat < lat_max and city.lon > lon_min and city.lon < lon_max:
-            # print(f"{lat_min} > {city.lat} > {lat_max}")
+            print(city.name)
             within.append(city)
 
     # TODO Ensure that the lat and lon valuse are all floats
